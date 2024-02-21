@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import React, { useState } from 'react';
 
@@ -33,7 +34,9 @@ export default function App() {
       <TouchableOpacity
         style={styles.button}
       >
-        <Text style={styles.buttonText}>Adicionar</Text>
+        <Text style={styles.buttonText}
+        onPress={addTask}
+        >Adicionar</Text>
       </TouchableOpacity>
     </View>
     <View style={styles.taskContainer}>
@@ -43,6 +46,23 @@ export default function App() {
     <Text style={styles.taskTextGreen}>Tarefas Cadastradas</Text>
   )}
 </View>
+<ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
+{tasks.map((task) => (
+  <View
+    key={task.id}
+    style={styles.taskRenderContainer}
+  >
+    <Text style={styles.taskRenderText}>{task.value}</Text>
+    <TouchableOpacity
+      onPress={() => removeTask(task.id)}
+      style={styles.taskRemoveButton}
+    >
+      <Text style={styles.buttonText}>Remover</Text>
+    </TouchableOpacity>
+  </View>
+))}
+</ScrollView>
+
     <StatusBar style="auto" />
   </View>
   );
@@ -85,6 +105,27 @@ const styles = StyleSheet.create({
     color: 'red',
     fontSize: 20,
     textAlign: 'center',
+  },
+  taskRenderContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: 'black',
+    paddingBottom: 10,
+  },
+  taskRenderText: {
+    width: '75%',
+  },
+  taskRemoveButton: {
+    backgroundColor: 'red',
+    padding: 10,
+    borderRadius: 5,
+  },
+  scrollView: {
+    marginBottom: 24,
   },
   
 });
